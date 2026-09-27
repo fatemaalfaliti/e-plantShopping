@@ -15,6 +15,16 @@ function ProductList({ onHomeClick }) {
     const calculateTotalQuantity = () => {
         return cartItems ? cartItems.reduce((total, item) => total + item.quantity, 0) : 0;
     };
+    // Keep addedToCart in sync with the cart:
+    // when a plant is removed from the cart, its "Add to Cart" button becomes enabled again
+    useEffect(() => {
+        const updatedAddedToCart = {};
+        cartItems.forEach((item) => {
+            updatedAddedToCart[item.name] = true;
+        });
+        setAddedToCart(updatedAddedToCart);
+    }, [cartItems]);
+    
     const plantsArray = [
         {
             category: "Air Purifying Plants",
